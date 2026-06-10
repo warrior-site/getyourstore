@@ -3,7 +3,7 @@ import { relations } from "drizzle-orm";
 
 
 export type OrderStatus = "pending" | "processing" | "shipped" | "delivered" | "cancelled";
-export type userRole = "admin" | "customer" | "support";
+export type UserRole = "admin" | "customer" | "support";
 export type CheckoutSessionLine = {
   productId: string;
   quantity: number;
@@ -15,7 +15,7 @@ export const users = pgTable("users",{
     clerkUserId: text("clerk_user_id").notNull().unique(),
     displayName: text("name").notNull(),
     email: text("email").notNull().unique(),
-    role: text("role").$type<userRole>().notNull(),
+    role: text("role").$type<UserRole>().notNull(),
     createdAt: timestamp("created_at",{withTimezone:true}).notNull().defaultNow(),
     updatedAt: timestamp("updated_at",{withTimezone:true}).notNull().defaultNow(),
 })
