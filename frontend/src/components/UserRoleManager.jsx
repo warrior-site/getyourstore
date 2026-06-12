@@ -12,7 +12,7 @@ export default function UserRoleManager() {
     try {
       setLoading(true);
 
-      const res = await fetch("https://getyourstore.onrender.com/admin/users", {
+      const res = await fetch("https://getyourstore.onrender.com/api/admin/users", {
         credentials: "include", // important if using auth cookies
       });
 
@@ -41,7 +41,7 @@ export default function UserRoleManager() {
         )
       );
 
-      const res = await fetch(`https://getyourstore.onrender.com/admin/users/${userId}/role`, {
+      const res = await fetch(`https://getyourstore.onrender.com/api/admin/users/${userId}/role`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
