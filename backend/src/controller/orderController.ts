@@ -153,8 +153,8 @@ export async function createStreamChannel(req: Request, res: Response, next: Nex
       return;
     }
 
-    if (order.status !== "delivered") {
-      res.status(403).json({ error: "Order must be delivered to open support chat" });
+   if (order.status !== "paid") {
+      res.status(403).json({ error: "Order must be paid to open support chat" });
       return;
     }
 

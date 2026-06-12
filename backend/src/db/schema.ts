@@ -2,7 +2,7 @@ import { pgTable, text, integer, timestamp, uuid, boolean, jsonb } from "drizzle
 import { relations } from "drizzle-orm";
 
 
-export type OrderStatus = "pending" | "processing" | "shipped" | "delivered" | "cancelled";
+export type OrderStatus = "pending" | "paid" | "failed";
 export type UserRole = "admin" | "customer" | "support";
 export type CheckoutSessionLine = {
   productId: string;
