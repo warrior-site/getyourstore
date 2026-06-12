@@ -3,23 +3,23 @@ import { CreditCardIcon, HeadphonesIcon, ShieldCheckIcon, TruckIcon } from "luci
 const items = [
   {
     icon: TruckIcon,
-    title: "Fulfillment",
-    desc: "Structured catalog & inventory-ready model",
+    title: "Bulk Availability",
+    desc: "Wide range of plastic items & kitchenware ready for supply",
   },
   {
     icon: ShieldCheckIcon,
-    title: "Secure pay",
-    desc: "Encrypted payments and order confirmation",
+    title: "Trusted Quality",
+    desc: "We deal in reliable and well-known brands",
   },
   {
     icon: CreditCardIcon,
-    title: "Transparent",
-    desc: "Prices in USD, tax where applicable",
+    title: "Best Pricing",
+    desc: "Competitive rates for retailers and bulk buyers",
   },
   {
     icon: HeadphonesIcon,
-    title: "Human support",
-    desc: "Order-scoped chat + optional video",
+    title: "Direct Support",
+    desc: "Contact us anytime for orders, queries, or assistance",
   },
 ];
 

@@ -3,7 +3,7 @@ import { relations } from "drizzle-orm";
 
 
 export type OrderStatus = "pending" | "paid" | "failed";
-export type UserRole = "admin" | "customer" | "support";
+export type UserRole = "admin" | "customer" | "support" |  "retailer";
 export type CheckoutSessionLine = {
   productId: string;
   quantity: number;

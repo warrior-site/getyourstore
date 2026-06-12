@@ -9,11 +9,12 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 font-semibold text-base-content">
               <TruckIcon className="size-8 text-primary" aria-hidden />
-              Northwind Supply
+              Devesh Plastic Store
             </div>
             <p className="mt-3 text-sm leading-relaxed text-base-content/65">
-              Curated hardware and workspace tools. Paid orders include priority support; chat with
-              our team and join a video call when we share a link.
+              Explore a wide range of plastic items and kitchenware from trusted brands.
+              Ideal for homes and retail shops—available in bulk with reliable quality.
+              Contact us directly for orders, pricing, and support.
             </p>
           </div>
 
@@ -47,7 +48,7 @@ export default function Footer() {
             <ul className="mt-3 space-y-2 text-sm text-base-content/70">
               <li className="flex items-start gap-2">
                 <HeadphonesIcon className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden />
-                <span>Order-scoped chat after payment; video links shared in-thread.</span>
+                <span>Direct support available for orders, queries, and assistance.</span>
               </li>
             </ul>
           </div>
@@ -57,15 +58,14 @@ export default function Footer() {
               Company
             </h3>
             <p className="mt-3 text-sm text-base-content/65">
-              Built for teams who care about clear specs, fast fulfillment, and human support when
-              it matters.
+              Distributor of all types of plastic items and kitchenware. Supplying trusted brands with reliable quality for homes and shopkeepers.
             </p>
           </div>
         </div>
 
         <div className="mt-10 space-y-4 border-t border-base-300 pt-6">
           <p className="text-center text-xs text-base-content/50">
-            © {new Date().getFullYear()} Northwind Supply · All prices in USD
+            © {new Date().getFullYear()} Devesh Plastic Store · All prices in RUPPEES · Made in Aligarh
           </p>
         </div>
       </div>

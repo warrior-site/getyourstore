@@ -9,6 +9,7 @@ import { orderItems, products } from "../db/schema.js";
 import { count, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { deleteImageKitAsset } from "../lib/imagekit.js";
+import { users } from "../db/schema.js";
 
 const env = getEnv();
 
@@ -28,6 +29,8 @@ const productCreate = z.object({
 });
 
 const productPatch = productCreate.partial();
+
+
 
 function buildProductUpdateSet(body: z.infer<typeof productPatch>) {
   const data: Partial<typeof products.$inferInsert> = {};
@@ -170,6 +173,48 @@ export async function deleteAdminProduct(req: Request, res: Response, next: Next
     await db.delete(products).where(eq(products.id, id));
 
     res.json({ ok: true });
+  } catch (e) {
+    next(e);
+  }
+}
+
+const userRoleUpdate = z.object({
+  role: z.enum(["admin", "customer", "retailer"]),
+});
+
+export async function updateUserRole(req: Request, res: Response, next: NextFunction) {
+  try {
+    const parsed = userRoleUpdate.safeParse(req.body);
+
+    if (!parsed.success) {
+      return res.status(400).json({
+        error: "Invalid body",
+        details: parsed.error.flatten(),
+      });
+    }
+
+    const { role } = parsed.data;
+
+    const [updated] = await db
+      .update(users)
+      .set({ role })
+      .where(eq(users.id, req.params.id as string))
+      .returning();
+
+    if (!updated) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ user: updated });
+  } catch (e) {
+    next(e);
+  }
+}
+export async function listAllUsers(_req: Request, res: Response, next: NextFunction) {
+  try {
+    const rows = await db.select().from(users).orderBy(desc(users.createdAt));
+
+    res.json({ users: rows });
   } catch (e) {
     next(e);
   }

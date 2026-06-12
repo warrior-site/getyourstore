@@ -34,10 +34,14 @@ const Navbar = () => {
             to="/"
             className="btn btn-ghost gap-2 px-2 font-mono text-lg font-semibold uppercase tracking-wide md:text-xl"
           >
-            <span className="flex size-10 items-center justify-center rounded-lg bg-primary/15 p-1 text-primary">
-              <StoreIcon className="size-8" aria-hidden />
+            <span className="flex size-10 items-center justify-center rounded-lg bg-primary/15 text-primary overflow-hidden">
+              <img
+                src="/devesh-plastic-store.png"
+                alt="Devesh Plastic Store logo"
+                className="w-8 h-8 object-contain"
+              />
             </span>
-            <span className="leading-none">Northwind</span>
+            <span className="leading-none">Devesh Plastic Store</span>
           </Link>
         </div>
 
