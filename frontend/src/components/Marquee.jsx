@@ -1,5 +1,5 @@
 import React from "react";
-import "./Marquee.css";
+import "./marquee.css";
 
 const brands = [
   { name: "cello", logo: "/cello-removebg-preview.png" },
