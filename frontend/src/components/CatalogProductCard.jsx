@@ -9,13 +9,14 @@ export function CatalogProductCard({ product }) {
   const addItem = useCart((s) => s.addItem);
 
   const { data: meData, isLoading } = useMe();
-  const role = meData?.user?.role; 
+  const role = meData?.user?.role;
 
-  // 🔐 Decide price securely
+  const basePrice = product.priceCents ?? 0;
+
   const priceToShow =
     role === "retailer"
-      ? product.priceCents_retailer || product.priceCents
-      : product.priceCents;
+      ? product.priceCents_retailer ?? basePrice
+      : basePrice;
 
   return (
     <article className="card group h-full overflow-hidden border border-base-300 bg-base-100 shadow-md transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-xl">
