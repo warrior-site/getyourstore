@@ -21,7 +21,7 @@ export function useHomeCatalog() {
   });
 
   const {
-    data: productsData,
+    data: productsData, 
     isLoading: loadingList,
     error,
   } = useQuery({

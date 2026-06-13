@@ -9,7 +9,7 @@ export function CatalogProductCard({ product }) {
   const addItem = useCart((s) => s.addItem);
 
   const { data: meData, isLoading } = useMe();
-  const role = meData?.user?.role;
+  const role = meData?.user?.role; 
 
   // 🔐 Decide price securely
   const priceToShow =
