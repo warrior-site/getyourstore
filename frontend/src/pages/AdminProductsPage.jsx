@@ -78,6 +78,7 @@ function AdminProductsPage() {
                 <th>Category</th>
                 <th>Slug</th>
                 <th>Price</th>
+                <th>Retailer Price</th>
                 <th>Active</th>
                 <th />
               </tr>
@@ -123,6 +124,8 @@ function AdminProductsPage() {
                   </td>
 
                   <td>{formatPrice(p.priceCents, p.currency)}</td>
+
+                  <td>{p.priceCents_retailer ? formatPrice(p.priceCents_retailer, p.currency) : "-"}</td>
 
                   <td>
                     {p.active ? (

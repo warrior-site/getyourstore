@@ -14,7 +14,7 @@ export function CatalogProductCard({ product }) {
   // 🔐 Decide price securely
   const priceToShow =
     role === "retailer"
-      ? product.priceCents_retailer
+      ? product.priceCents_retailer || product.priceCents
       : product.priceCents;
 
   return (

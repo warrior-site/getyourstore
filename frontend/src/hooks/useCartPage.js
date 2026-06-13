@@ -1,6 +1,7 @@
 import { useAuth } from "@clerk/react";
 
 import { useCart } from "../store/cart";
+import { useMe } from "./useMe";
 import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "../lib/api";
 import { useState } from "react";
@@ -8,6 +9,8 @@ import { useState } from "react";
 export default function useCartPage() {
   const { getToken } = useAuth();
   const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const { data: meData } = useMe();
+  const role = meData?.user?.role;
 
   const items = useCart((s) => s.items);
   const setQty = useCart((s) => s.setQty);
@@ -30,9 +33,17 @@ export default function useCartPage() {
     product: byId.get(line.productId) ?? null,
   }));
 
+  // 🔐 Use retailer price if applicable
+  const getPrice = (product) => {
+    if (!product) return 0;
+    return role === "retailer" && product.priceCents_retailer
+      ? product.priceCents_retailer
+      : product.priceCents;
+  };
+
   const subtotal = lines.reduce((sum, { line, product: p }) => {
     if (!p) return sum;
-    return sum + p.priceCents * line.quantity;
+    return sum + getPrice(p) * line.quantity;
   }, 0);
 
   async function checkout() {
@@ -64,6 +75,7 @@ export default function useCartPage() {
     productsError,
     lines,
     subtotal,
+    getPrice,
     checkout,
     checkoutLoading,
   };

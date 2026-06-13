@@ -19,6 +19,7 @@ const productCreate = z.object({
   category: z.string().min(1).default("General"),
   description: z.string().default(""),
   priceCents: z.number().int().positive(),
+  priceCents_retailer: z.number().int().positive().optional(),
   currency: z.string().min(1).default("usd"),
   imageUrl: z
     .union([z.string().url(), z.literal("")])
@@ -39,6 +40,7 @@ function buildProductUpdateSet(body: z.infer<typeof productPatch>) {
   if (body.category !== undefined) data.category = body.category;
   if (body.description !== undefined) data.description = body.description;
   if (body.priceCents !== undefined) data.priceCents = body.priceCents;
+  if (body.priceCents_retailer !== undefined) data.priceCents_retailer = body.priceCents_retailer;
   if (body.currency !== undefined) data.currency = body.currency;
   if (body.imageUrl !== undefined) data.imageUrl = body.imageUrl === "" ? null : body.imageUrl;
   if (body.imageKitFileId !== undefined) {

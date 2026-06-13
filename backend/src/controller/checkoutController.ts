@@ -67,11 +67,13 @@ export async function createCheckout(req: Request, res: Response, next: NextFunc
 
     for (const line of parsed.data.items) {
       const p = byId.get(line.productId)!;
-      totalCents += p.priceCents * line.quantity;
+      // 🔐 Use retailer price if applicable
+      const unitPrice = localUser.role === "retailer" && p.priceCents_retailer ? p.priceCents_retailer : p.priceCents;
+      totalCents += unitPrice * line.quantity;
       lines.push({
         productId: p.id,
         quantity: line.quantity,
-        unitPriceCents: p.priceCents,
+        unitPriceCents: unitPrice,
       });
     }
 

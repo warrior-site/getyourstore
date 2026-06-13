@@ -4,6 +4,7 @@ import { PageError } from "../components/PageError.jsx";
 import { useProductPage } from "../hooks/useProductPage.js";
 import { IK_PRESETS, imageKitOptimizedUrl, imageKitWatermarkedUrl } from "../lib/imagekitUrl.js";
 import { useCart } from "../store/cart.js";
+import { useMe } from "../hooks/useMe.js";
 import { ArrowLeftIcon, CheckIcon, ExternalLinkIcon, ShoppingCartIcon } from "lucide-react";
 import { formatPrice } from "../utils/format.js";
 
@@ -16,6 +17,8 @@ const HIGHLIGHTS = [
 function ProductDetailPage() {
   const addItem = useCart((s) => s.addItem);
   const { product, isLoading, error } = useProductPage();
+  const { data: meData } = useMe();
+  const role = meData?.user?.role;
 
   if (isLoading) return <ProductPageSkeleton />;
 
@@ -28,6 +31,12 @@ function ProductDetailPage() {
   const watermarkedFullUrl = p.imageUrl
     ? imageKitWatermarkedUrl(p.imageUrl, IK_PRESETS.productHero)
     : null;
+
+  // 🔐 Decide price securely
+  const priceToShow =
+    role === "retailer"
+      ? p.priceCents_retailer || p.priceCents
+      : p.priceCents;
 
   return (
     <div>
@@ -85,7 +94,7 @@ function ProductDetailPage() {
           </h1>
 
           <p className="mt-3 text-3xl font-bold tabular-nums text-primary md:text-4xl">
-            {formatPrice(p.priceCents, p.currency)}
+            {formatPrice(priceToShow, p.currency)}
           </p>
 
           <p className="mt-6 text-base leading-relaxed text-base-content/85">{p.description}</p>

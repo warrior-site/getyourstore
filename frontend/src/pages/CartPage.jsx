@@ -26,6 +26,7 @@ function CartPage() {
     removeItem,
     setQty,
     subtotal,
+    getPrice,
   } = useCartPage();
 
   return (
@@ -75,7 +76,7 @@ function CartPage() {
                     </div>
                     {p ? (
                       <p className="text-sm text-base-content/60">
-                        {formatPrice(p.priceCents, p.currency)} each
+                        {formatPrice(getPrice(p), p.currency)} each
                       </p>
                     ) : null}
                     <div className="mt-2 flex flex-wrap items-center gap-3">
@@ -117,7 +118,7 @@ function CartPage() {
                     </div>
                   </div>
                   <div className="text-right font-semibold text-base-content">
-                    {p ? formatPrice(p.priceCents * line.quantity, p.currency) : "-"}
+                    {p ? formatPrice(getPrice(p) * line.quantity, p.currency) : "-"}
                   </div>
                 </div>
               </li>
