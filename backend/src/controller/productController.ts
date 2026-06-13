@@ -17,9 +17,9 @@ export async function listProducts(req: Request, res: Response, next: NextFuncti
       .where(whereClause)
       .orderBy(desc(products.createdAt));
     // cast req to any to satisfy getLocalUser parameter typing
-    const user = getLocalUser(req as any);
-    if ((await user).role !== "retailer") {
-      // remove retailer-only price from each product before sending
+    const user = await getLocalUser(req as any);
+
+    if (!user || user.role !== "retailer") {
       rows = rows.map((r) => {
         const copy: any = { ...r };
         delete copy.priceCents_retailer;
@@ -58,9 +58,9 @@ export async function getProductBySlug(req: Request, res: Response, next: NextFu
 
     if (!row || !row.active) return res.status(404).json({ error: "Not found" });
 
-    // 🔐 Check user role and filter retailer price if not a retailer
-    const user = getLocalUser(req as any);
-    if ((await user).role !== "retailer") {
+    const user = await getLocalUser(req as any);
+
+    if (!user || user.role !== "retailer") {
       const copy: any = { ...row };
       delete copy.priceCents_retailer;
       return res.json({ product: copy });
