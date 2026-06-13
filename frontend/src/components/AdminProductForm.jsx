@@ -14,6 +14,8 @@ export function AdminProductForm({ initial, saving, error, getToken, onCancel, o
   const [active, setActive] = useState(initial?.active ?? true);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [uploadError, setUploadError] = useState(null);
+   const [priceCentsRetailer, setPriceCentsRetailer] = useState(initial ? String(initial.priceCents_retailer / 100) : "");
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -26,6 +28,7 @@ export function AdminProductForm({ initial, saving, error, getToken, onCancel, o
       category: category.trim() || "General",
       description: description.trim(),
       priceCents: Math.round(dollars * 100),
+      priceCents_retailer: Math.round(Number.parseFloat(priceCentsRetailer) * 100),
       currency: currency.trim().toLowerCase(),
       imageUrl: imageUrl.trim() || null,
       imageKitFileId: imageKitFileId.trim() || null,
@@ -38,6 +41,7 @@ export function AdminProductForm({ initial, saving, error, getToken, onCancel, o
       if (body.category !== (initial.category ?? "General")) patch.category = body.category;
       if (body.description !== initial.description) patch.description = body.description;
       if (body.priceCents !== initial.priceCents) patch.priceCents = body.priceCents;
+      if (body.priceCents_retailer !== initial.priceCents_retailer) patch.priceCents_retailer = body.priceCents_retailer;
       if (body.currency !== initial.currency) patch.currency = body.currency;
       if ((body.imageUrl ?? "") !== (initial.imageUrl ?? "")) patch.imageUrl = body.imageUrl;
       if ((body.imageKitFileId ?? null) !== (initial.imageKitFileId ?? null)) {
@@ -130,7 +134,7 @@ export function AdminProductForm({ initial, saving, error, getToken, onCancel, o
 
       <div className="grid grid-cols-2 gap-2">
         <label className="form-control">
-          <span className="label-text">Price (USD)</span>
+          <span className="label-text">Price (INR)</span>
           <input
             className="input input-bordered"
             type="number"
@@ -138,6 +142,20 @@ export function AdminProductForm({ initial, saving, error, getToken, onCancel, o
             min="0.01"
             value={priceCents}
             onChange={(e) => setPriceCents(e.target.value)}
+            required
+          />
+        </label>
+        {/* price retailer */}
+
+         <label className="form-control">
+          <span className="label-text">Price Retailer (INR)</span>
+          <input
+            className="input input-bordered"
+            type="number"
+            step="0.01"
+            min="0.01"
+            value={priceCentsRetailer}
+            onChange={(e) => setPriceCentsRetailer(e.target.value)}
             required
           />
         </label>

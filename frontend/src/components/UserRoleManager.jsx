@@ -91,7 +91,7 @@ export default function UserRoleManager() {
             >
               {/* User Info */}
               <div>
-                <p className="font-medium text-sm">{user.name || "Unnamed"}</p>
+                <p className="font-medium text-sm">{user.displayName || "Unnamed"}</p>
                 <p className="text-xs text-gray-400">{user.email}</p>
               </div>
 

@@ -3,15 +3,25 @@ import { PlusIcon } from "lucide-react";
 import { formatPrice } from "../utils/format.js";
 import { IK_PRESETS, imageKitOptimizedUrl } from "../lib/imagekitUrl.js";
 import { useCart } from "../store/cart.js";
+import { useMe } from "../hooks/useMe.js";
 
 export function CatalogProductCard({ product }) {
   const addItem = useCart((s) => s.addItem);
+
+  const { data: meData, isLoading } = useMe();
+  const role = meData?.user?.role;
+
+  // 🔐 Decide price securely
+  const priceToShow =
+    role === "retailer"
+      ? product.priceCents_retailer
+      : product.priceCents;
 
   return (
     <article className="card group h-full overflow-hidden border border-base-300 bg-base-100 shadow-md transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-xl">
       <Link to={`/product/${product.slug}`} className="relative block overflow-hidden">
         <figure className="aspect-4/3 bg-base-300">
-          {product.imageUrl ? (
+          {product.imageUrl && (
             <img
               src={imageKitOptimizedUrl(product.imageUrl, IK_PRESETS.catalogCard)}
               alt=""
@@ -19,12 +29,14 @@ export function CatalogProductCard({ product }) {
               loading="lazy"
               decoding="async"
             />
-          ) : null}
+          )}
         </figure>
+
         <span className="badge badge-sm absolute left-3 top-3 border-0 bg-base-100/90 text-xs font-medium text-base-content/80 backdrop-blur">
           {product.category ?? "General"}
         </span>
       </Link>
+
       <div className="card-body grow gap-3 p-5 text-left">
         <Link
           to={`/product/${product.slug}`}
@@ -32,19 +44,24 @@ export function CatalogProductCard({ product }) {
         >
           {product.name}
         </Link>
+
         <p className="line-clamp-3 text-sm leading-relaxed text-base-content/70">
           {product.description}
         </p>
+
         <div className="card-actions mt-auto items-center justify-between border-t border-base-200 pt-4">
+          {/* 🔥 Price */}
           <span className="text-lg font-bold tabular-nums text-base-content">
-            {formatPrice(product.priceCents, product.currency)}
+            {formatPrice(priceToShow, product.currency)}
           </span>
+
           <button
             type="button"
             onClick={() => addItem(product.id)}
             className="btn btn-primary btn-sm gap-1 shadow"
+            disabled={isLoading} // prevent flicker
           >
-            <PlusIcon className="size-4" aria-hidden />
+            <PlusIcon className="size-4" />
             Add
           </button>
         </div>

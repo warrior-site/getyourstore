@@ -2,6 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 import { db } from "../db/index.js";
 import { products } from "../db/schema.js";
 import { and, desc, eq } from "drizzle-orm";
+import { getLocalUser } from "../lib/user.js";
 
 export async function listProducts(req: Request, res: Response, next: NextFunction) {
   try {
@@ -10,11 +11,21 @@ export async function listProducts(req: Request, res: Response, next: NextFuncti
     const activeOnly = eq(products.active, true);
     const whereClause = cat ? and(activeOnly, eq(products.category, cat)) : activeOnly;
 
-    const rows = await db
+    let rows = await db
       .select()
       .from(products)
       .where(whereClause)
       .orderBy(desc(products.createdAt));
+    // cast req to any to satisfy getLocalUser parameter typing
+    const user = getLocalUser(req as any);
+    if ((await user).role !== "retailer") {
+      // remove retailer-only price from each product before sending
+      rows = rows.map((r) => {
+        const copy: any = { ...r };
+        delete copy.priceCents_retailer;
+        return copy;
+      });
+    }
 
     res.json({ products: rows });
   } catch (e) {
