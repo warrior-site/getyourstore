@@ -84,7 +84,7 @@ function HomePage() {
           <ul className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {products.map((p) => (
               <li key={p.id}>
-                <CatalogProductCard products={p} />
+                <CatalogProductCard product={p} />
               </li>
             ))}
           </ul>

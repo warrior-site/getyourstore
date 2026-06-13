@@ -6,6 +6,10 @@ import { useCart } from "../store/cart.js";
 import { useMe } from "../hooks/useMe.js";
 
 export function CatalogProductCard({ product }) {
+  if (!product) {
+    return null;
+  }
+
   const addItem = useCart((s) => s.addItem);
 
   const { data: meData, isLoading } = useMe();
