@@ -1,8 +1,12 @@
 export function formatPrice(cents, currency) {
-  return new Intl.NumberFormat(undefined, {
-    style: "currency",
-    currency: (currency ?? "usd").toUpperCase(),
-  }).format(cents / 100);
+  const normalizedCurrency = (currency ?? "inr").toLowerCase();
+  return new Intl.NumberFormat(
+    normalizedCurrency === "inr" ? "en-IN" : undefined,
+    {
+      style: "currency",
+      currency: normalizedCurrency.toUpperCase(),
+    },
+  ).format(cents / 100);
 }
 
 export function formatOrderWhen(iso, opts = {}) {

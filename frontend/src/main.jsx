@@ -4,13 +4,13 @@ import "./index.css";
 import App from "./App.jsx";
 
 import * as Sentry from "@sentry/react";
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
 import { ClerkProvider } from "@clerk/react";
 import { BrowserRouter } from "react-router";
 import { SentryErrorFallback } from "./components/SentryErrorFallback.jsx";
 import { SentryUserSync } from "./components/SentryUserSync.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const queryClient = new QueryClient();
 
@@ -44,17 +44,12 @@ createRoot(document.getElementById("root")).render(
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Sentry.ErrorBoundary fallback={<SentryErrorFallback />}>
+            {/* ToastContainer is now a sibling, not a wrapper */}
             <App />
+            <ToastContainer />
           </Sentry.ErrorBoundary>
         </BrowserRouter>
       </QueryClientProvider>
     </ClerkProvider>
   </StrictMode>,
 );
-
-// In simple terms, 'browserTracingIntegration' lets Sentry see things like:
-// page load timing
-// route/navigation timing
-// slow frontend interactions
-// outgoing fetch / API requests
-// frontend-to-backend trace linking

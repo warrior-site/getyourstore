@@ -14,6 +14,7 @@ import { IK_PRESETS, imageKitOptimizedUrl } from "../lib/imagekitUrl.js";
 import { Link } from "react-router-dom";
 import { formatPrice } from "../utils/format.js";
 import { Show, SignInButton } from "@clerk/react";
+import { toast } from "react-toastify";
 
 function CartPage() {
   const {
@@ -28,6 +29,9 @@ function CartPage() {
     subtotal,
     getPrice,
   } = useCartPage();
+  const notify = ()=>{
+    toast("Please contact the seller to place your order.")
+  }
 
   return (
     <div className="text-left">
@@ -129,14 +133,15 @@ function CartPage() {
             <div className="flex justify-between text-sm">
               <span className="text-base-content/70">Subtotal</span>
               <span className="font-semibold text-base-content">
-                {formatPrice(subtotal, lines[0]?.product?.currency ?? "usd")}
+                {formatPrice(subtotal, lines[0]?.product?.currency ?? "inr")}
               </span>
             </div>
 
             <Show when="signed-in">
               <button
                 type="button"
-                onClick={checkout}
+                // onClick={checkout}
+                   onClick={notify}
                 disabled={checkoutLoading}
                 aria-busy={checkoutLoading}
                 className="btn btn-primary mt-6 w-full gap-2"

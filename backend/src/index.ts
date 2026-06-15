@@ -20,7 +20,7 @@ import streamRouter from "./routes/streamRouter.js"
 
 dotenv.config()
 const app = express()
-
+ 
 
 const rawJson = express.raw({type:"application/json",limit:"1mb"})
 
@@ -85,5 +85,5 @@ app.use(
 
 app.listen(process.env.PORT,()=>{
     console.log(`Server is running on port ${process.env.PORT}`)
-    if(process.env.NODE_ENV === "production") keepAlive.start();
+    if(process.env.NODE_ENV === "development") keepAlive.start();
 })

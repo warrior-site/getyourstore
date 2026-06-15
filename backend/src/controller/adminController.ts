@@ -20,7 +20,7 @@ const productCreate = z.object({
   description: z.string().default(""),
   priceCents: z.number().int().positive(),
   priceCents_retailer: z.number().int().positive().optional(),
-  currency: z.string().min(1).default("usd"),
+  currency: z.string().min(1).default("inr"),
   imageUrl: z
     .union([z.string().url(), z.literal("")])
     .optional()

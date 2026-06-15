@@ -1,6 +1,7 @@
 import Footer from "../Footer.jsx";
 import Navbar from "./Navbar.jsx";
-import FloatingCTA from "./FloatingCTA"; // 👈 ADD THIS
+import FloatingCTA from "./FloatingCTA"; 
+// import CatalogRack from "./CatalogRack.jsx";
 
 function Layout({ children }) {
   return (

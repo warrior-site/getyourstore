@@ -1,4 +1,5 @@
 import { CatalogProductCard } from "../components/CatalogProductCard.jsx";
+import CatalogRack from "../components/CatalogRack.jsx";
 import { HomeHero } from "../components/HomeHero.jsx";
 import Marquee from "../components/Marquee.jsx";
 import { PageError } from "../components/PageError.jsx";
@@ -28,6 +29,12 @@ function HomePage() {
       <section className="flex justify-center">
         <div className="w-full max-w-5xl px-4">
           <Marquee />
+        </div>
+      </section>
+
+      <section className="flex justify-center">
+        <div className="w-full ">
+          <CatalogRack/>
         </div>
       </section>
 
