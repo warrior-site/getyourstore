@@ -140,8 +140,8 @@ function CartPage() {
             <Show when="signed-in">
               <button
                 type="button"
-                // onClick={checkout}
-                   onClick={notify}
+                 onClick={checkout}
+                 //  onClick={notify}
                 disabled={checkoutLoading}
                 aria-busy={checkoutLoading}
                 className="btn btn-primary mt-6 w-full gap-2"
